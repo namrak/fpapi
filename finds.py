@@ -444,10 +444,9 @@ def doctrines_date(apphandle, date):
     return hashtotals
 
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     #tests
     mongohandle = connect()
-    (shiptot, itemtot, ammotot) = corporation_date(mongohandle, 98388312, '2017-04-22')
-    print(len(shiptot))
-    print(len(itemtot))
-    print(len(ammotot))
+    test = doctrines(mongohandle)
+    print(test)
+
