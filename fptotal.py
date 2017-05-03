@@ -10,7 +10,7 @@ def countships(ships, uships):
         for cship in ships:
             if cship == typeid:
                 count += 1
-                shipdata.pop(shipdata.index(cship))
+                ships.pop(ships.index(cship))
         shiptotal['quantitylost'] = count
         shiptotals.append(shiptotal)
     return shiptotals
