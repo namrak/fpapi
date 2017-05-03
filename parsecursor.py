@@ -6,11 +6,11 @@ def ships_and_items(cursor):
     ships = []
     items = []
     ammos = []
-    shipdata = []
+    # shipdata = []
     itemdata = []
     for killmail in cursor:
         ships.append(killmail['shipID'])
-        shipdata.append({'typeid': killmail['shipID']})
+        # shipdata.append({'typeid': killmail['shipID']})
         for item in killmail['items']:
             if item['isAmmo'] is True:
                 ammos.append(item['itemID'])
@@ -21,7 +21,7 @@ def ships_and_items(cursor):
                  'attached': item['isAttached'],
                  'quantity': item['quantity'],
                  'dropped': item['dropped']})
-    return (ships, items, ammos, shipdata, itemdata)
+    return (ships, items, ammos, itemdata)
 
 def fithashes(cursor):
     """return data from cursor - fit hashes"""

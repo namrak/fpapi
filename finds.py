@@ -37,11 +37,11 @@ def corporation_date(apphandle, corporationid, date):
                            "items": 1,
                            "_id": 0}).hint('corporationtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -80,11 +80,11 @@ def corporation_days(apphandle, corporationid, days):
                                "items": 1,
                                "_id": 0}).hint('corporationtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -122,11 +122,11 @@ def corporation_system_date(apphandle, corporationid, system, date):
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -167,11 +167,11 @@ def corporation_system_days(apphandle, corporationid, system, days):
                                "items": 1,
                                "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -206,11 +206,11 @@ def corporation_system_oneday(apphandle, corporationid, system):
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -243,11 +243,11 @@ def corporation_oneday(apphandle, corporationid):
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -283,11 +283,11 @@ def alliance_date(apphandle, allianceid, date):
                            "items": 1,
                            "_id": 0}).hint('alliancetime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -326,11 +326,11 @@ def alliance_days(apphandle, allianceid, days):
                                "items": 1,
                                "_id": 0}).hint('alliancetime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -368,11 +368,11 @@ def alliance_system_date(apphandle, allianceid, system, date):
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -412,11 +412,11 @@ def alliance_system_days(apphandle, allianceid, system, days):
                                "items": 1,
                                "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -450,11 +450,11 @@ def alliance_system_oneday(apphandle, allianceid, system):
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename
@@ -487,11 +487,11 @@ def alliance_oneday(apphandle, allianceid):
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
-    (ships, items, ammos, shipdata, itemdata) = parsecursor.ships_and_items(cursor)
+    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
 
     # generate ship list and count
     uships = np.unique(ships)
-    shiptotals = fptotal.countships(shipdata, uships)
+    shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
         typename = get_name_from_id(apphandle, shiptotal['typeid'])
         shiptotal['name'] = typename

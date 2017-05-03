@@ -1,5 +1,5 @@
 
-def countships(shipdata, uships):
+def countships(ships, uships):
     """count ships"""
     shiptotals = []
     for ship in uships:
@@ -7,8 +7,8 @@ def countships(shipdata, uships):
         shiptotal = {}
         shiptotal['typeid'] = typeid
         count = 0
-        for cship in shipdata:
-            if cship['typeid'] == typeid:
+        for cship in ships:
+            if cship == typeid:
                 count += 1
                 shipdata.pop(shipdata.index(cship))
         shiptotal['quantitylost'] = count
