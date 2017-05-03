@@ -10,8 +10,7 @@ def ships_and_items(cursor):
     itemdata = []
     for killmail in cursor:
         ships.append(killmail['shipID'])
-        shipdata.append({'typeid': killmail['shipID'],
-                         'name': killmail['shipName']})
+        shipdata.append({'typeid': killmail['shipID']})
         for item in killmail['items']:
             if item['isAmmo'] is True:
                 ammos.append(item['itemID'])
@@ -19,7 +18,6 @@ def ships_and_items(cursor):
                 items.append(item['itemID'])
             itemdata.append(
                 {'typeid': item['itemID'],
-                 'name': item['itemName'],
                  'attached': item['isAttached'],
                  'quantity': item['quantity'],
                  'dropped': item['dropped']})

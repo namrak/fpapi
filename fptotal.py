@@ -7,14 +7,11 @@ def countships(shipdata, uships):
         shiptotal = {}
         shiptotal['typeid'] = typeid
         count = 0
-        sname = ""
         for cship in shipdata:
             if cship['typeid'] == typeid:
-                sname = cship['name']
                 count += 1
                 shipdata.pop(shipdata.index(cship))
         shiptotal['quantitylost'] = count
-        shiptotal['name'] = sname
         shiptotals.append(shiptotal)
     return shiptotals
 
@@ -24,21 +21,18 @@ def countitems(itemdata, uitems):
     for item in uitems:
         typeid = int(item)
         itemtotal = {}
-        itemtotal['typeID'] = typeid
+        itemtotal['typeid'] = typeid
         dropped = 0
         attached = 0
         quantitylost = 0
-        iname = ""
         for itemm in itemdata:
             if itemm['typeid'] == typeid:
-                iname = itemm['name']
                 quantitylost += itemm['quantity']
                 if itemm['attached'] is True:
                     attached += 1
                 if itemm['dropped'] is True:
                     dropped += itemm['quantity']
                 itemdata.pop(itemdata.index(itemm))
-        itemtotal['name'] = iname
         itemtotal['quantityAttached'] = attached
         itemtotal['quantityDropped'] = dropped
         itemtotal['totalLost'] = quantitylost
@@ -51,21 +45,18 @@ def countammos(itemdata, uammos):
     for ammoid in uammos:
         typeid = int(ammoid)
         ammototal = {}
-        ammototal['typeID'] = typeid
+        ammototal['typeid'] = typeid
         dropped = 0
         attached = 0
         quantitylost = 0
-        aname = ""
         for itemm in itemdata:
             if itemm['typeid'] == typeid:
-                aname = itemm['name']
                 quantitylost += itemm['quantity']
                 if itemm['attached'] is True:
                     attached += 1
                 if itemm['dropped'] is True:
                     dropped += itemm['quantity']
                 itemdata.pop(itemdata.index(itemm))
-        ammototal['name'] = aname
         ammototal['quantityAttached'] = attached
         ammototal['quantityDropped'] = dropped
         ammototal['quantityLost'] = quantitylost

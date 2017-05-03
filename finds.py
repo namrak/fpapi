@@ -15,6 +15,13 @@ def connect():
     db.authenticate(creds['un'], creds['pw'])
     return db
 
+def get_name_from_id(apphandle, typeid):
+    """get item name from typeid db"""
+    typeids = apphandle.typeIDs
+    cursor = typeids.find_one({"typeID": typeid}, {"name": 1})
+    itemname = cursor['name']
+    return itemname
+
 def corporation_date(apphandle, corporationid, date):
     """find by corp system and specified date"""
     allloss = apphandle.allLoss
@@ -27,7 +34,6 @@ def corporation_date(apphandle, corporationid, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('corporationtime')
     #build lists for processing
@@ -36,14 +42,23 @@ def corporation_date(apphandle, corporationid, date):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -62,7 +77,6 @@ def corporation_days(apphandle, corporationid, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
-                               "shipName": 1,
                                "items": 1,
                                "_id": 0}).hint('corporationtime')
     #build lists for processing
@@ -71,14 +85,23 @@ def corporation_days(apphandle, corporationid, days):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -96,7 +119,6 @@ def corporation_system_date(apphandle, corporationid, system, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
@@ -105,14 +127,23 @@ def corporation_system_date(apphandle, corporationid, system, date):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -133,7 +164,6 @@ def corporation_system_days(apphandle, corporationid, system, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
-                               "shipName": 1,
                                "items": 1,
                                "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
@@ -142,14 +172,23 @@ def corporation_system_days(apphandle, corporationid, system, days):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -164,7 +203,6 @@ def corporation_system_oneday(apphandle, corporationid, system):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
@@ -173,14 +211,23 @@ def corporation_system_oneday(apphandle, corporationid, system):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -193,7 +240,6 @@ def corporation_oneday(apphandle, corporationid):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
     #build lists for processing
@@ -202,14 +248,23 @@ def corporation_oneday(apphandle, corporationid):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -225,7 +280,6 @@ def alliance_date(apphandle, allianceid, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('alliancetime')
     #build lists for processing
@@ -234,14 +288,23 @@ def alliance_date(apphandle, allianceid, date):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -260,7 +323,6 @@ def alliance_days(apphandle, allianceid, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
-                               "shipName": 1,
                                "items": 1,
                                "_id": 0}).hint('alliancetime')
     #build lists for processing
@@ -269,14 +331,23 @@ def alliance_days(apphandle, allianceid, days):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -294,7 +365,6 @@ def alliance_system_date(apphandle, allianceid, system, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
@@ -303,14 +373,23 @@ def alliance_system_date(apphandle, allianceid, system, date):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -330,7 +409,6 @@ def alliance_system_days(apphandle, allianceid, system, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
-                               "shipName": 1,
                                "items": 1,
                                "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
@@ -339,14 +417,23 @@ def alliance_system_days(apphandle, allianceid, system, days):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -360,7 +447,6 @@ def alliance_system_oneday(apphandle, allianceid, system):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
@@ -369,14 +455,23 @@ def alliance_system_oneday(apphandle, allianceid, system):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -389,7 +484,6 @@ def alliance_oneday(apphandle, allianceid):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
-                           "shipName": 1,
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
     #build lists for processing
@@ -398,14 +492,23 @@ def alliance_oneday(apphandle, allianceid):
     # generate ship list and count
     uships = np.unique(ships)
     shiptotals = fptotal.countships(shipdata, uships)
+    for shiptotal in shiptotals:
+        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
+    for itemtotal in itemtotals:
+        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
+    for ammototal in ammototals:
+        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
@@ -447,6 +550,12 @@ def doctrines_date(apphandle, date):
 if __name__ == "__main__":
     #tests
     mongohandle = connect()
-    test = doctrines(mongohandle)
-    print(test)
+    test1 = doctrines(mongohandle)
+    test2 = doctrines_date(mongohandle, '2017-04-10')
+    test3 = corporation_oneday(mongohandle, 98388312)
+    test4 = alliance_oneday(mongohandle, 99005338)
+    print(len(test1))
+    print(len(test2))
+    print(test3)
+    print(test4)
 
