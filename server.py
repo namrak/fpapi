@@ -1,7 +1,6 @@
 """api for totals"""
 from flask import Flask, jsonify, request
 import finds
-#pylint: disable=C0301
 
 app = Flask(__name__)
 apphandle = finds.connect()
@@ -72,12 +71,12 @@ def get_by_alliance(allianceid):
                     'ammototals': ammototals})
 
 @app.route('/doctrines', methods=['GET'])
-# get doctrines by date or by last 24 hour time period
+
 def get_doctrines():
+    """get doctrines by date or by last 24 hour time period"""
     if request.args.get('date') != None:
         doctrines = finds.doctrines_date(apphandle, request.args.get('date'))
     else:
-        # last 24 hours
         doctrines = finds.doctrines(apphandle)
     return jsonify(doctrines)
 

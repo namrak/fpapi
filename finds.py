@@ -6,7 +6,6 @@ from pymongo import MongoClient
 import fptotal
 import parsecursor
 from mdb import creds
-#pylint: disable=C0103,C0301
 
 def connect():
     """connect to mongodb"""
