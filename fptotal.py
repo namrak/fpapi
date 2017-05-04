@@ -77,6 +77,7 @@ def countfits(hashdata, uhashes):
                 kreport = {}
                 kreport['url'] = killmail['killurl']
                 kreport['corporation'] = killmail['corpName']
+                kreport['typeid'] = killmail['typeid']
                 outarray.append(kreport)
                 hashdata.pop(hashdata.index(killmail))
         report['data'] = outarray

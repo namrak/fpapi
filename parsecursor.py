@@ -33,6 +33,7 @@ def fithashes(cursor):
             killmailurl = 'https://zkillboard.com/kill/' + str(killmail['killID'])
             hashdata.append({
                 'fitHash': killmail['fitHash'],
+                'typeid': killmail['shipID'],
                 'killurl': killmailurl,
                 'corpName': killmail['corporationName']})
     return (hashes, hashdata)

@@ -151,7 +151,7 @@ def corporation_system_days(apphandle, corporationid, system, days):
     """find by corp system and specified days"""
     allloss = apphandle.allLoss
     system = int(system)
-    if float(days) > 3 or float(days) < 0:
+    if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
         ammototals = [{"error":"parameter 'days' range error"}]
@@ -311,7 +311,7 @@ def alliance_date(apphandle, allianceid, date):
 def alliance_days(apphandle, allianceid, days):
     """find by corp and specified days"""
     allloss = apphandle.allLoss
-    if float(days) > 3 or float(days) < 0:
+    if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
         ammototals = [{"error":"parameter 'days' range error"}]
@@ -526,6 +526,9 @@ def doctrines(apphandle):
     (hashes, hashdata) = parsecursor.fithashes(cursor)
     uhashes = np.unique(hashes)
     hashtotals = fptotal.countfits(hashdata, uhashes)
+    for hashtotal in hashtotals:
+        typename = get_name_from_id(apphandle, hashtotal['data'][0]['typeid'])
+        hashtotal['name'] = typename
     return hashtotals
 
 def doctrines_date(apphandle, date):
@@ -544,6 +547,9 @@ def doctrines_date(apphandle, date):
     (hashes, hashdata) = parsecursor.fithashes(cursor)
     uhashes = np.unique(hashes)
     hashtotals = fptotal.countfits(hashdata, uhashes)
+    for hashtotal in hashtotals:
+        typename = get_name_from_id(apphandle, hashtotal['data'][0]['typeid'])
+        hashtotal['name'] = typename
     return hashtotals
 
 
