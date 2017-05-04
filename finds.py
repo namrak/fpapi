@@ -14,16 +14,16 @@ def connect():
     db.authenticate(creds['un'], creds['pw'])
     return db
 
-def get_name_from_id(apphandle, typeid):
+def get_name_from_id(mongohandle, typeid):
     """get item name from typeid db"""
-    typeids = apphandle.typeIDs
+    typeids = mongohandle.typeIDs
     cursor = typeids.find_one({"typeID": typeid}, {"name": 1})
     itemname = cursor['name']
     return itemname
 
-def corporation_date(apphandle, corporationid, date):
+def corporation_date(mongohandle, corporationid, date):
     """find by corp system and specified date"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     datestring = date + ' 11:05:00'
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
@@ -42,28 +42,28 @@ def corporation_date(apphandle, corporationid, date):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def corporation_days(apphandle, corporationid, days):
+def corporation_days(mongohandle, corporationid, days):
     """find by corp and specified days"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     if float(days) > 3 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
@@ -85,28 +85,28 @@ def corporation_days(apphandle, corporationid, days):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def corporation_system_date(apphandle, corporationid, system, date):
+def corporation_system_date(mongohandle, corporationid, system, date):
     """find by corp system and specified date"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     system = int(system)
     timeframe = 24 * 60 * 60
     datestring = date + ' 11:05:00'
@@ -127,28 +127,28 @@ def corporation_system_date(apphandle, corporationid, system, date):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def corporation_system_days(apphandle, corporationid, system, days):
+def corporation_system_days(mongohandle, corporationid, system, days):
     """find by corp system and specified days"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     system = int(system)
     if float(days) > 3 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
@@ -172,28 +172,28 @@ def corporation_system_days(apphandle, corporationid, system, days):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def corporation_system_oneday(apphandle, corporationid, system):
+def corporation_system_oneday(mongohandle, corporationid, system):
     """find by corp and system - one day"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     system = int(system)
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
@@ -211,28 +211,28 @@ def corporation_system_oneday(apphandle, corporationid, system):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def corporation_oneday(apphandle, corporationid):
+def corporation_oneday(mongohandle, corporationid):
     """find by corp and system - one day"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allloss.find({"corporationID": corporationid,
@@ -248,28 +248,28 @@ def corporation_oneday(apphandle, corporationid):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def alliance_date(apphandle, allianceid, date):
+def alliance_date(mongohandle, allianceid, date):
     """find by corp system and specified date"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     datestring = date + ' 11:05:00'
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
@@ -288,28 +288,28 @@ def alliance_date(apphandle, allianceid, date):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def alliance_days(apphandle, allianceid, days):
+def alliance_days(mongohandle, allianceid, days):
     """find by corp and specified days"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     if float(days) > 3 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
@@ -331,28 +331,28 @@ def alliance_days(apphandle, allianceid, days):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def alliance_system_date(apphandle, allianceid, system, date):
+def alliance_system_date(mongohandle, allianceid, system, date):
     """find by corp system and specified date"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     system = int(system)
     timeframe = 24 * 60 * 60
     datestring = date + ' 11:05:00'
@@ -373,28 +373,28 @@ def alliance_system_date(apphandle, allianceid, system, date):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def alliance_system_days(apphandle, allianceid, system, days):
+def alliance_system_days(mongohandle, allianceid, system, days):
     """find by corp system and specified days"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     if float(days) > 3 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
@@ -417,28 +417,28 @@ def alliance_system_days(apphandle, allianceid, system, days):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def alliance_system_oneday(apphandle, allianceid, system):
+def alliance_system_oneday(mongohandle, allianceid, system):
     """find by corp and system - one day"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allloss.find({"allianceID": allianceid,
@@ -455,28 +455,28 @@ def alliance_system_oneday(apphandle, allianceid, system):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def alliance_oneday(apphandle, allianceid):
+def alliance_oneday(mongohandle, allianceid):
     """find by corp and system - one day"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allloss.find({"allianceID": allianceid,
@@ -492,28 +492,28 @@ def alliance_oneday(apphandle, allianceid):
     uships = np.unique(ships)
     shiptotals = fptotal.countships(ships, uships)
     for shiptotal in shiptotals:
-        typename = get_name_from_id(apphandle, shiptotal['typeid'])
+        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
         shiptotal['name'] = typename
 
     # generate item list and count
     uitems = np.unique(items)
     itemtotals = fptotal.countitems(itemdata, uitems)
     for itemtotal in itemtotals:
-        typename = get_name_from_id(apphandle, itemtotal['typeid'])
+        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
         itemtotal['name'] = typename
 
     # generate ammo list and count
     uammos = np.unique(ammos)
     ammototals = fptotal.countammos(itemdata, uammos)
     for ammototal in ammototals:
-        typename = get_name_from_id(apphandle, ammototal['typeid'])
+        typename = get_name_from_id(mongohandle, ammototal['typeid'])
         ammototal['name'] = typename
 
     return (shiptotals, itemtotals, ammototals)
 
-def doctrines(apphandle):
+def doctrines(mongohandle):
     """find and count hashes in last 24 hours"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allloss.find({"unixKillTime": {"$gte": gmtminus}},
@@ -526,13 +526,13 @@ def doctrines(apphandle):
     uhashes = np.unique(hashes)
     hashtotals = fptotal.countfits(hashdata, uhashes)
     for hashtotal in hashtotals:
-        typename = get_name_from_id(apphandle, hashtotal['data'][0]['typeid'])
+        typename = get_name_from_id(mongohandle, hashtotal['data'][0]['typeid'])
         hashtotal['name'] = typename
     return hashtotals
 
-def doctrines_date(apphandle, date):
+def doctrines_date(mongohandle, date):
     """find and count hashes for specific date"""
-    allloss = apphandle.allLoss
+    allloss = mongohandle.allLoss
     timeframe = 24 * 60 * 60
     datestring = date + ' 11:05:00'
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
@@ -547,18 +547,18 @@ def doctrines_date(apphandle, date):
     uhashes = np.unique(hashes)
     hashtotals = fptotal.countfits(hashdata, uhashes)
     for hashtotal in hashtotals:
-        typename = get_name_from_id(apphandle, hashtotal['data'][0]['typeid'])
+        typename = get_name_from_id(mongohandle, hashtotal['data'][0]['typeid'])
         hashtotal['name'] = typename
     return hashtotals
 
 
 if __name__ == "__main__":
     #tests
-    mongohandle = connect()
-    test1 = doctrines(mongohandle)
-    test2 = doctrines_date(mongohandle, '2017-04-10')
-    test3 = corporation_oneday(mongohandle, 98388312)
-    test4 = alliance_oneday(mongohandle, 99005338)
+    testhandle = connect()
+    test1 = doctrines(testhandle)
+    test2 = doctrines_date(testhandle, '2017-04-10')
+    test3 = corporation_oneday(testhandle, 98388312)
+    test4 = alliance_oneday(testhandle, 99005338)
     print(len(test1))
     print(len(test2))
     print(test3)
