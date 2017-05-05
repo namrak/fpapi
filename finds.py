@@ -1,9 +1,7 @@
 """build find queries"""
 import calendar
 import time
-import numpy as np
 from pymongo import MongoClient
-import fptotal
 import parsecursor
 from mdb import creds
 
@@ -14,6 +12,7 @@ def connect():
     db.authenticate(creds['un'], creds['pw'])
     return db
 
+# leaving this in because it might be helpful later
 def get_name_from_id(mongohandle, typeid):
     """get item name from typeid db"""
     typeids = mongohandle.typeIDs
@@ -33,38 +32,16 @@ def corporation_date(mongohandle, corporationid, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('corporationtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def corporation_days(mongohandle, corporationid, days):
     """find by corp and specified days"""
     allloss = mongohandle.allLoss
-    if float(days) > 3 or float(days) < 0:
+    if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
         ammototals = [{"error":"parameter 'days' range error"}]
@@ -76,33 +53,11 @@ def corporation_days(mongohandle, corporationid, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
+                               "shipName":1,
                                "items": 1,
                                "_id": 0}).hint('corporationtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def corporation_system_date(mongohandle, corporationid, system, date):
     """find by corp system and specified date"""
@@ -118,39 +73,17 @@ def corporation_system_date(mongohandle, corporationid, system, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def corporation_system_days(mongohandle, corporationid, system, days):
     """find by corp system and specified days"""
     allloss = mongohandle.allLoss
     system = int(system)
-    if float(days) > 3 or float(days) < 0:
+    if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
         ammototals = [{"error":"parameter 'days' range error"}]
@@ -163,33 +96,11 @@ def corporation_system_days(mongohandle, corporationid, system, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
+                               "shipName":1,
                                "items": 1,
                                "_id": 0}).hint('corporationsystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def corporation_system_oneday(mongohandle, corporationid, system):
     """find by corp and system - one day"""
@@ -202,33 +113,11 @@ def corporation_system_oneday(mongohandle, corporationid, system):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def corporation_oneday(mongohandle, corporationid):
     """find by corp and system - one day"""
@@ -239,33 +128,11 @@ def corporation_oneday(mongohandle, corporationid):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('corporationsystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def alliance_date(mongohandle, allianceid, date):
     """find by corp system and specified date"""
@@ -279,38 +146,16 @@ def alliance_date(mongohandle, allianceid, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('alliancetime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def alliance_days(mongohandle, allianceid, days):
     """find by corp and specified days"""
     allloss = mongohandle.allLoss
-    if float(days) > 3 or float(days) < 0:
+    if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
         ammototals = [{"error":"parameter 'days' range error"}]
@@ -322,33 +167,11 @@ def alliance_days(mongohandle, allianceid, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
+                               "shipName":1,
                                "items": 1,
                                "_id": 0}).hint('alliancetime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def alliance_system_date(mongohandle, allianceid, system, date):
     """find by corp system and specified date"""
@@ -364,38 +187,16 @@ def alliance_system_date(mongohandle, allianceid, system, date):
                                "$gte": starttime,
                                "$lt": stoptime}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def alliance_system_days(mongohandle, allianceid, system, days):
     """find by corp system and specified days"""
     allloss = mongohandle.allLoss
-    if float(days) > 3 or float(days) < 0:
+    if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
         ammototals = [{"error":"parameter 'days' range error"}]
@@ -408,33 +209,11 @@ def alliance_system_days(mongohandle, allianceid, system, days):
                                "unixKillTime": {
                                    "$gte": gmtminus}},
                               {"shipID": 1,
+                               "shipName":1,
                                "items": 1,
                                "_id": 0}).hint('alliancesystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def alliance_system_oneday(mongohandle, allianceid, system):
     """find by corp and system - one day"""
@@ -446,33 +225,11 @@ def alliance_system_oneday(mongohandle, allianceid, system):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def alliance_oneday(mongohandle, allianceid):
     """find by corp and system - one day"""
@@ -483,33 +240,11 @@ def alliance_oneday(mongohandle, allianceid):
                            "unixKillTime": {
                                "$gte": gmtminus}},
                           {"shipID": 1,
+                           "shipName":1,
                            "items": 1,
                            "_id": 0}).hint('alliancesystemtime')
-    #build lists for processing
-    (ships, items, ammos, itemdata) = parsecursor.ships_and_items(cursor)
-
-    # generate ship list and count
-    uships = np.unique(ships)
-    shiptotals = fptotal.countships(ships, uships)
-    for shiptotal in shiptotals:
-        typename = get_name_from_id(mongohandle, shiptotal['typeid'])
-        shiptotal['name'] = typename
-
-    # generate item list and count
-    uitems = np.unique(items)
-    itemtotals = fptotal.countitems(itemdata, uitems)
-    for itemtotal in itemtotals:
-        typename = get_name_from_id(mongohandle, itemtotal['typeid'])
-        itemtotal['name'] = typename
-
-    # generate ammo list and count
-    uammos = np.unique(ammos)
-    ammototals = fptotal.countammos(itemdata, uammos)
-    for ammototal in ammototals:
-        typename = get_name_from_id(mongohandle, ammototal['typeid'])
-        ammototal['name'] = typename
-
-    return (shiptotals, itemtotals, ammototals)
+    (ships, items, ammos) = parsecursor.ships_and_items(cursor)
+    return (ships, items, ammos)
 
 def doctrines(mongohandle):
     """find and count hashes in last 24 hours"""
@@ -519,15 +254,11 @@ def doctrines(mongohandle):
     cursor = allloss.find({"unixKillTime": {"$gte": gmtminus}},
                           {"killID": 1,
                            "shipID": 1,
+                           "shipName":1,
                            "corporationName": 1,
                            "fitHash": 1,
                            "_id": 0}).hint('timeindex')
-    (hashes, hashdata) = parsecursor.fithashes(cursor)
-    uhashes = np.unique(hashes)
-    hashtotals = fptotal.countfits(hashdata, uhashes)
-    for hashtotal in hashtotals:
-        typename = get_name_from_id(mongohandle, hashtotal['data'][0]['typeid'])
-        hashtotal['name'] = typename
+    hashtotals = parsecursor.fithashes(cursor)
     return hashtotals
 
 def doctrines_date(mongohandle, date):
@@ -540,17 +271,12 @@ def doctrines_date(mongohandle, date):
     cursor = allloss.find({"unixKillTime": {"$gte": starttime, "$lt": stoptime}},
                           {"killID": 1,
                            "shipID": 1,
+                           "shipName":1,
                            "corporationName": 1,
                            "fitHash": 1,
                            "_id": 0}).hint('timeindex')
-    (hashes, hashdata) = parsecursor.fithashes(cursor)
-    uhashes = np.unique(hashes)
-    hashtotals = fptotal.countfits(hashdata, uhashes)
-    for hashtotal in hashtotals:
-        typename = get_name_from_id(mongohandle, hashtotal['data'][0]['typeid'])
-        hashtotal['name'] = typename
+    hashtotals = parsecursor.fithashes(cursor)
     return hashtotals
-
 
 if __name__ == "__main__":
     #tests
