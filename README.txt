@@ -30,4 +30,6 @@ parameters:
 
 parameters:
 
+    ?days=<value>           retrieve only kill data from last value*24 before current time - value can be decimal, no greater than 6 days
+
     ?date=<YYYY-mm-dd>      retrieve only kill data from input date 11:05 GMT to next day 11:05 GMT
