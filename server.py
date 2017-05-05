@@ -75,6 +75,8 @@ def get_doctrines():
     """get doctrines by date or by last 24 hour time period"""
     if request.args.get('date') != None:
         doctrines = finds.doctrines_date(mongohandle, request.args.get('date'))
+    elif request.args.get('days') != None:
+        doctrines = finds.doctrines_days(mongohandle, request.args.get('days'))
     else:
         doctrines = finds.doctrines(mongohandle)
     return jsonify(doctrines)

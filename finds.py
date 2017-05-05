@@ -284,6 +284,27 @@ def doctrines_date(mongohandle, date):
             hashtotals.pop(fithash)
     return hashtotals
 
+def doctrines_days(mongohandle, days):
+    """find and count hashes for specified days"""
+    allloss = mongohandle.allLoss
+    if float(days) > 7 or float(days) < 0:
+        return {"error": "date range error"}
+    else:
+        timeframe = float(days) * 24 * 60 * 60
+        gmtminus = time.mktime(time.gmtime()) - timeframe    
+        cursor = allloss.find({"unixKillTime": {"$gte": gmtminus}},
+                            {"killID": 1,
+                            "shipID": 1,
+                            "shipName":1,
+                            "corporationName": 1,
+                            "fitHash": 1,
+                            "_id": 0}).hint('timeindex')
+    hashtotals = parsecursor.fithashes(cursor)
+    for fithash in list(hashtotals):
+        if hashtotals[fithash]['count'] < 5:
+            hashtotals.pop(fithash)
+    return hashtotals
+
 if __name__ == "__main__":
     #tests
     testhandle = connect()
