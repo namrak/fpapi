@@ -15,7 +15,7 @@ parameters:
 
     ?system=<systemid>      retrieve only kill data from specified system id
 
-    ?days=<value>           retrieve only kill data from last value*24 before current time - value can be decimal, no greater than 3 days (if I figure out how to do this more efficiently I might be able to increase this limit)
+    ?days=<value>           retrieve only kill data from last value*24 before current time - value can be decimal, no greater than 6 days
 
     ?date=<YYYY-mm-dd>      retrieve only kill data from input date 11:05 GMT to next day 11:05 GMT
 
