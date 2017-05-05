@@ -29,7 +29,7 @@ def countitems(itemdata, uitems):
             if itemm['typeid'] == typeid:
                 quantitylost += itemm['quantity']
                 if itemm['attached'] is True:
-                    attached += 1
+                    attached += itemm['quantity']
                 if itemm['dropped'] is True:
                     dropped += itemm['quantity']
                 itemdata.pop(itemdata.index(itemm))
@@ -53,7 +53,7 @@ def countammos(itemdata, uammos):
             if itemm['typeid'] == typeid:
                 quantitylost += itemm['quantity']
                 if itemm['attached'] is True:
-                    attached += 1
+                    attached += itemm['quantity']
                 if itemm['dropped'] is True:
                     dropped += itemm['quantity']
                 itemdata.pop(itemdata.index(itemm))
