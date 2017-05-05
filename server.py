@@ -71,7 +71,6 @@ def get_by_alliance(allianceid):
                     'ammototals': ammototals})
 
 @app.route('/doctrines', methods=['GET'])
-
 def get_doctrines():
     """get doctrines by date or by last 24 hour time period"""
     if request.args.get('date') != None:
