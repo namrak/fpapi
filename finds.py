@@ -288,7 +288,7 @@ def doctrines_days(mongohandle, days):
     """find and count hashes for specified days"""
     allloss = mongohandle.allLoss
     if float(days) > 7 or float(days) < 0:
-        return {"error": "date range error"}
+        return {"error":"parameter 'days' range error"}
     else:
         timeframe = float(days) * 24 * 60 * 60
         gmtminus = time.mktime(time.gmtime()) - timeframe    
