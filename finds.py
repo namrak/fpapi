@@ -259,6 +259,9 @@ def doctrines(mongohandle):
                            "fitHash": 1,
                            "_id": 0}).hint('timeindex')
     hashtotals = parsecursor.fithashes(cursor)
+    for fithash in list(hashtotals):
+        if hashtotals[fithash]['count'] < 5:
+            hashtotals.pop(fithash)
     return hashtotals
 
 def doctrines_date(mongohandle, date):
@@ -276,6 +279,9 @@ def doctrines_date(mongohandle, date):
                            "fitHash": 1,
                            "_id": 0}).hint('timeindex')
     hashtotals = parsecursor.fithashes(cursor)
+    for fithash in list(hashtotals):
+        if hashtotals[fithash]['count'] < 5:
+            hashtotals.pop(fithash)
     return hashtotals
 
 if __name__ == "__main__":
@@ -287,6 +293,6 @@ if __name__ == "__main__":
     test4 = alliance_oneday(testhandle, 99005338)
     print(len(test1))
     print(len(test2))
-    print(test3)
-    print(test4)
+    print(len(test3))
+    print(len(test4))
 
