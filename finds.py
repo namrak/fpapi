@@ -128,12 +128,12 @@ def alliance_date(mongohandle, alliance_id, date):
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
     stoptime = starttime + timeframe
     cursor = allkills.find({"alliance_id": alliance_id,
-                           "unix_kill_time": {
+                            "unix_kill_time": {
                                "$gte": starttime,
                                "$lt": stoptime}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('alliancetime')
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('alliancetime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -179,6 +179,7 @@ def alliance_system_date(mongohandle, alliance_id, system, date):
 def alliance_system_days(mongohandle, alliance_id, system, days):
     """find by corp system and specified days"""
     allkills = mongohandle.allkills
+    system = int(system)
     if float(days) > 7 or float(days) < 0:
         shiptotals = [{"error":"parameter 'days' range error"}]
         itemtotals = [{"error":"parameter 'days' range error"}]
@@ -200,6 +201,7 @@ def alliance_system_days(mongohandle, alliance_id, system, days):
 def alliance_system_oneday(mongohandle, alliance_id, system):
     """find by corp and system - one day"""
     allkills = mongohandle.allkills
+    system = int(system)
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allkills.find({"alliance_id": alliance_id,
