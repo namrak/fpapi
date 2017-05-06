@@ -21,8 +21,8 @@ parameters:
 
     the following combinations work
 
-    ?system=<systemid>?days=<value>
-    ?system=<systemid>?date=<YYYY-mm-dd> 
+    ?system=<systemid>&days=<value>
+    ?system=<systemid>&date=<YYYY-mm-dd> 
 
 /doctrines
 
