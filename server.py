@@ -34,8 +34,8 @@ def get_by_corporation(corporationid):
     else:
         (shiptotals, itemtotals, ammototals) = finds.corporation_oneday(mongohandle,
                                                                         corporationid)
-    return jsonify({'shiptotals': shiptotals,
-                    'itemtotals': itemtotals,
+    return jsonify({'__shiptotals': shiptotals,
+                    '_itemtotals': itemtotals,
                     'ammototals': ammototals})
 
 @app.route('/alliance/<int:allianceid>', methods=['GET'])
@@ -66,8 +66,8 @@ def get_by_alliance(allianceid):
     else:
         (shiptotals, itemtotals, ammototals) = finds.alliance_oneday(mongohandle,
                                                                      allianceid)
-    return jsonify({'shiptotals': shiptotals,
-                    'itemtotals': itemtotals,
+    return jsonify({'__shiptotals': shiptotals,
+                    '_itemtotals': itemtotals,
                     'ammototals': ammototals})
 
 @app.route('/doctrines', methods=['GET'])
