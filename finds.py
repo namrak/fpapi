@@ -285,14 +285,28 @@ def doctrines_days(mongohandle, days):
     return hashtotals
 
 if __name__ == "__main__":
-    tests
+    # tests
     testhandle = connect()
     test1 = doctrines(testhandle)
-    test2 = doctrines_date(testhandle, '2017-04-10')
-    test3 = corporation_oneday(testhandle, 98388312)
-    test4 = alliance_oneday(testhandle, 99005338)
-    print(len(test1))
-    print(len(test2))
-    print(len(test3))
-    print(len(test4))
+    test2 = doctrines_date(testhandle, '2017-05-05')
+    test3 = doctrines_days(testhandle, 4)
+    (shiptest1, itemtest1, ammotest1) = corporation_oneday(testhandle, 98388312)
+    (shiptest2, itemtest2, ammotest2) = alliance_oneday(testhandle, 99005338)
+    (shiptest3, itemtest3, ammotest3) = corporation_days(testhandle, 98388312, 2)
+    (shiptest4, itemtest4, ammotest4) = alliance_days(testhandle, 99005338, 2)
+    (shiptest5, itemtest5, ammotest5) = corporation_date(testhandle, 98388312, '2017-05-05')
+    (shiptest6, itemtest6, ammotest6) = alliance_date(testhandle, 99005338, '2017-05-05')
+    (shiptest7, itemtest7, ammotest7) = corporation_system_days(testhandle, 98388312, 30002016, 2)
+    (shiptest8, itemtest8, ammotest8) = alliance_system_days(testhandle, 99005338, 30002016, 2)
+    (shiptest9, itemtest9, ammotest9) = corporation_system_date(testhandle, 98388312, 30002016, '2017-05-05')
+    (shiptest10, itemtest10, ammotest10) = alliance_system_date(testhandle, 99005338, 30002016, '2017-05-05')
+    (shiptest11, itemtest11, ammotest11) = corporation_system_oneday(testhandle, 98388312, 30002016)
+    (shiptest12, itemtest12, ammotest12) = alliance_system_oneday(testhandle, 99005338, 30002016)
+    print(len(test1),len(test2),len(test3))
+    print(len(shiptest1), len(itemtest2),len(shiptest3), len(itemtest4))
+    print(len(ammotest5), len(itemtest6),len(shiptest7), len(itemtest8))
+    print(len(ammotest8), len(itemtest10),len(shiptest10), len(itemtest7))
+    print(len(ammotest7), len(itemtest6),len(shiptest4), len(itemtest3))
+    print(len(ammotest11), len(itemtest11),len(shiptest12), len(itemtest12))
+
 
