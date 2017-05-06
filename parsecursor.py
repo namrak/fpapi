@@ -7,73 +7,73 @@ def ships_and_items(cursor):
     items = {}
     ammos = {}
     for killmail in cursor:
-        if killmail['shipID'] in ships:
-            ships[killmail['shipID']]['totallost'] += 1
+        if killmail['ship']['type_id'] in ships:
+            ships[killmail['ship']['type_id']]['total_lost'] += 1
         else:
-            ships[killmail['shipID']] = {}
-            ships[killmail['shipID']]['name'] = killmail['shipName']
-            ships[killmail['shipID']]['totallost'] = 1
+            ships[killmail['ship']['type_id']] = {}
+            ships[killmail['ship']['type_id']]['name'] = killmail['ship']['name']
+            ships[killmail['ship']['type_id']]['total_lost'] = 1
         for item in killmail['items']:
-            if item['isAmmo'] is True:
-                if item['itemID'] in ammos:
-                    ammos[item['itemID']]['totallost'] += item['quantity']
+            if item['is_ammo'] is True:
+                if item['type_id'] in ammos:
+                    ammos[item['type_id']]['total_lost'] += item['quantity']
                     if item['dropped'] is True:
-                        ammos[item['itemID']]['quantitydropped'] += item['quantity']
-                    if item['isAttached'] is True:
-                        ammos[item['itemID']]['quantityattached'] += item['quantity']
+                        ammos[item['type_id']]['quantity_dropped'] += item['quantity']
+                    if item['is_attached'] is True:
+                        ammos[item['type_id']]['quantity_attached'] += item['quantity']
                 else:
-                    ammos[item['itemID']] = {}
-                    ammos[item['itemID']]['name'] = item['itemName']
-                    ammos[item['itemID']]['totallost'] = item['quantity']
+                    ammos[item['type_id']] = {}
+                    ammos[item['type_id']]['_name'] = item['name']
+                    ammos[item['type_id']]['total_lost'] = item['quantity']
                     if item['dropped'] is True:
-                        ammos[item['itemID']]['quantitydropped'] = item['quantity']
+                        ammos[item['type_id']]['quantity_dropped'] = item['quantity']
                     else:
-                        ammos[item['itemID']]['quantitydropped'] = 0
-                    if item['isAttached'] is True:
-                        ammos[item['itemID']]['quantityattached'] = item['quantity']
+                        ammos[item['type_id']]['quantity_dropped'] = 0
+                    if item['is_attached'] is True:
+                        ammos[item['type_id']]['quantity_attached'] = item['quantity']
                     else:
-                        ammos[item['itemID']]['quantityattached'] = 0
+                        ammos[item['type_id']]['quantity_attached'] = 0
             else:
-                if item['itemID'] in items:
-                    items[item['itemID']]['totallost'] += item['quantity']
+                if item['type_id'] in items:
+                    items[item['type_id']]['total_lost'] += item['quantity']
                     if item['dropped'] is True:
-                        items[item['itemID']]['quantitydropped'] += item['quantity']
-                    if item['isAttached'] is True:
-                        items[item['itemID']]['quantityattached'] += item['quantity']
+                        items[item['type_id']]['quantity_dropped'] += item['quantity']
+                    if item['is_attached'] is True:
+                        items[item['type_id']]['quantity_attached'] += item['quantity']
                 else:
-                    items[item['itemID']] = {}
-                    items[item['itemID']]['name'] = item['itemName']
-                    items[item['itemID']]['totallost'] = item['quantity']
+                    items[item['type_id']] = {}
+                    items[item['type_id']]['_name'] = item['name']
+                    items[item['type_id']]['total_lost'] = item['quantity']
                     if item['dropped'] is True:
-                        items[item['itemID']]['quantitydropped'] = item['quantity']
+                        items[item['type_id']]['quantity_dropped'] = item['quantity']
                     else:
-                        items[item['itemID']]['quantitydropped'] = 0
-                    if item['isAttached'] is True:
-                        items[item['itemID']]['quantityattached'] = item['quantity']
+                        items[item['type_id']]['quantity_dropped'] = 0
+                    if item['is_attached'] is True:
+                        items[item['type_id']]['quantity_attached'] = item['quantity']
                     else:
-                        items[item['itemID']]['quantityattached'] = 0
+                        items[item['type_id']]['quantity_attached'] = 0
     return (ships, items, ammos)
 
 def fithashes(cursor):
     """return data from cursor - fit hashes"""
     hashtotals = {}
     for killmail in cursor:
-        if podorstructure.check(killmail['shipID']) != 1:
-            if killmail['fitHash'] in hashtotals:
+        if podorstructure.check(killmail['ship']['type_id']) != 1:
+            if killmail['fithash'] in hashtotals:
+                hashtotals[killmail['fithash']]['count'] += 1
                 hashreport = {}
-                hashreport['corporation'] = killmail['corporationName']
-                hashreport['url'] = 'https://zkillboard.com/kill/' + str(killmail['killID'])
-                hashtotals[killmail['fitHash']]['count'] += 1
-                hashtotals[killmail['fitHash']]['data'].append(hashreport)
+                hashreport['corporation'] = killmail['corporation_name']
+                hashreport['url'] = 'https://zkillboard.com/kill/' + str(killmail['kill_id'])
+                hashtotals[killmail['fithash']]['data'].append(hashreport)
             else:
+                hashtotals[killmail['fithash']] = {}
+                hashtotals[killmail['fithash']]['count'] = 1
+                hashtotals[killmail['fithash']]['_name'] = killmail['ship']['name']
+                hashtotals[killmail['fithash']]['data'] = []
                 hashreport = {}
-                hashreport['corporation'] = killmail['corporationName']
-                hashreport['url'] = 'https://zkillboard.com/kill/' + str(killmail['killID'])
-                hashtotals[killmail['fitHash']] = {}
-                hashtotals[killmail['fitHash']]['count'] = 1
-                hashtotals[killmail['fitHash']]['shipname'] = killmail['shipName']
-                hashtotals[killmail['fitHash']]['data'] = []
-                hashtotals[killmail['fitHash']]['data'].append(hashreport)
+                hashreport['corporation'] = killmail['corporation_name']
+                hashreport['url'] = 'https://zkillboard.com/kill/' + str(killmail['kill_id'])
+                hashtotals[killmail['fithash']]['data'].append(hashreport)
     return hashtotals
 
 
