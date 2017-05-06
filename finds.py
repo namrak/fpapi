@@ -20,12 +20,12 @@ def corporation_date(mongohandle, corporation_id, date):
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
     stoptime = starttime + timeframe
     cursor = allkills.find({"corporation_id": corporation_id,
-                           "unix_kill_time": {
-                               "$gte": starttime,
-                               "$lt": stoptime}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('corptime')
+                            "unix_kill_time": {
+                                "$gte": starttime,
+                                "$lt": stoptime}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('corptime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -41,11 +41,11 @@ def corporation_days(mongohandle, corporation_id, days):
         timeframe = float(days) * 24 * 60 * 60
         gmtminus = time.mktime(time.gmtime()) - timeframe
         cursor = allkills.find({"corporation_id": corporation_id,
-                               "unix_kill_time": {
-                                   "$gte": gmtminus}},
-                              {"ship": 1,
-                               "items": 1,
-                               "_id": 0}).hint('corptime')
+                                "unix_kill_time": {
+                                    "$gte": gmtminus}},
+                               {"ship": 1,
+                                "items": 1,
+                                "_id": 0}).hint('corptime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -58,13 +58,13 @@ def corporation_system_date(mongohandle, corporation_id, system, date):
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
     stoptime = starttime + timeframe
     cursor = allkills.find({"corporation_id": corporation_id,
-                           "solar_system_id": system,
-                           "unix_kill_time": {
-                               "$gte": starttime,
-                               "$lt": stoptime}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('corpsystemtime')
+                            "solar_system_id": system,
+                            "unix_kill_time": {
+                                "$gte": starttime,
+                                "$lt": stoptime}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('corpsystemtime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -81,12 +81,12 @@ def corporation_system_days(mongohandle, corporation_id, system, days):
         timeframe = float(days) * 24 * 60 * 60
         gmtminus = time.mktime(time.gmtime()) - timeframe
         cursor = allkills.find({"corporation_id": corporation_id,
-                               "solar_system_id": system,
-                               "unix_kill_time": {
-                                   "$gte": gmtminus}},
-                              {"ship": 1,
-                               "items": 1,
-                               "_id": 0}).hint('corpsystemtime')
+                                "solar_system_id": system,
+                                "unix_kill_time": {
+                                    "$gte": gmtminus}},
+                               {"ship": 1,
+                                "items": 1,
+                                "_id": 0}).hint('corpsystemtime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -97,12 +97,12 @@ def corporation_system_oneday(mongohandle, corporation_id, system):
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allkills.find({"corporation_id": corporation_id,
-                           "solar_system_id": system,
-                           "unix_kill_time": {
-                               "$gte": gmtminus}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('corpsystemtime')
+                            "solar_system_id": system,
+                            "unix_kill_time": {
+                                "$gte": gmtminus}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('corpsystemtime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -112,11 +112,11 @@ def corporation_oneday(mongohandle, corporation_id):
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allkills.find({"corporation_id": corporation_id,
-                           "unix_kill_time": {
-                               "$gte": gmtminus}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('corptime')
+                            "unix_kill_time": {
+                                "$gte": gmtminus}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('corptime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -129,8 +129,8 @@ def alliance_date(mongohandle, alliance_id, date):
     stoptime = starttime + timeframe
     cursor = allkills.find({"alliance_id": alliance_id,
                             "unix_kill_time": {
-                               "$gte": starttime,
-                               "$lt": stoptime}},
+                                "$gte": starttime,
+                                "$lt": stoptime}},
                            {"ship": 1,
                             "items": 1,
                             "_id": 0}).hint('alliancetime')
@@ -149,11 +149,11 @@ def alliance_days(mongohandle, alliance_id, days):
         timeframe = float(days) * 24 * 60 * 60
         gmtminus = time.mktime(time.gmtime()) - timeframe
         cursor = allkills.find({"alliance_id": alliance_id,
-                               "unix_kill_time": {
-                                   "$gte": gmtminus}},
-                              {"ship": 1,
-                               "items": 1,
-                               "_id": 0}).hint('alliancetime')
+                                "unix_kill_time": {
+                                    "$gte": gmtminus}},
+                               {"ship": 1,
+                                "items": 1,
+                                "_id": 0}).hint('alliancetime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -166,13 +166,13 @@ def alliance_system_date(mongohandle, alliance_id, system, date):
     starttime = calendar.timegm(time.strptime(datestring, '%Y-%m-%d %H:%M:%S'))
     stoptime = starttime + timeframe
     cursor = allkills.find({"alliance_id": alliance_id,
-                           "solar_system_id": system,
-                           "unix_kill_time": {
-                               "$gte": starttime,
-                               "$lt": stoptime}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('alliancesystemtime')
+                            "solar_system_id": system,
+                            "unix_kill_time": {
+                                "$gte": starttime,
+                                "$lt": stoptime}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('alliancesystemtime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -189,12 +189,12 @@ def alliance_system_days(mongohandle, alliance_id, system, days):
         timeframe = float(days) * 24 * 60 * 60
         gmtminus = time.mktime(time.gmtime()) - timeframe
         cursor = allkills.find({"alliance_id": alliance_id,
-                               "solar_system_id": system,
-                               "unix_kill_time": {
-                                   "$gte": gmtminus}},
-                              {"ship": 1,
-                               "items": 1,
-                               "_id": 0}).hint('alliancesystemtime')
+                                "solar_system_id": system,
+                                "unix_kill_time": {
+                                    "$gte": gmtminus}},
+                               {"ship": 1,
+                                "items": 1,
+                                "_id": 0}).hint('alliancesystemtime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -205,12 +205,12 @@ def alliance_system_oneday(mongohandle, alliance_id, system):
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allkills.find({"alliance_id": alliance_id,
-                           "solar_system_id": system,
-                           "unix_kill_time": {
-                               "$gte": gmtminus}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('alliancesystemtime')
+                            "solar_system_id": system,
+                            "unix_kill_time": {
+                                "$gte": gmtminus}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('alliancesystemtime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
@@ -220,11 +220,11 @@ def alliance_oneday(mongohandle, alliance_id):
     timeframe = 24 * 60 * 60
     gmtminus = time.mktime(time.gmtime()) - timeframe
     cursor = allkills.find({"alliance_id": alliance_id,
-                           "unix_kill_time": {
-                               "$gte": gmtminus}},
-                          {"ship": 1,
-                           "items": 1,
-                           "_id": 0}).hint('alliancetime')
+                            "unix_kill_time": {
+                                "$gte": gmtminus}},
+                           {"ship": 1,
+                            "items": 1,
+                            "_id": 0}).hint('alliancetime')
     (ships, items, ammos) = parsecursor.ships_and_items(cursor)
     return (ships, items, ammos)
 
